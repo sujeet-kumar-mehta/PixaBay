@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pixabay</string>
+    <string name="transition_name_of_image">transition</string>
 </resources>
