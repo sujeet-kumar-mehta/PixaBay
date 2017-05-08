@@ -22,7 +22,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="@dimen/margin_8"
             android:background="@drawable/search_background"
-            android:hint="Search Images"
+            android:hint="@string/search_images"
             android:padding="5dp"
             android:textColor="@android:color/white"
             android:textColorHint="@color/background_color"></EditText>

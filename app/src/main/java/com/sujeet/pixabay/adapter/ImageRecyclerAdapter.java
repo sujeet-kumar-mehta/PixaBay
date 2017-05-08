@@ -85,6 +85,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
             Glide.with(itemView.getContext()).load(imageModel.getPreviewURL()).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
                     return false;
                 }
 

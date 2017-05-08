@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Pixabay</string>
     <string name="transition_name_of_image">transition</string>
+    <string name="search_images">Search Images</string>
+    <string name="no_internet">No Internet!</string>
+    <string name="text_missing">Search text missing!</string>
 </resources>

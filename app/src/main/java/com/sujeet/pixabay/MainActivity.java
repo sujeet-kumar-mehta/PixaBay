@@ -17,6 +17,8 @@ import com.sujeet.pixabay.api.ApiClient;
 import com.sujeet.pixabay.api.ApiInterface;
 import com.sujeet.pixabay.model.ImageModel;
 import com.sujeet.pixabay.model.ImageModelResponse;
+import com.sujeet.pixabay.utils.DataUtils;
+import com.sujeet.pixabay.utils.UiUtils;
 
 import java.util.List;
 
@@ -27,7 +29,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private EditText mSearchEditText;
-    private ImageButton mSearchImageButton;
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mImageRecyclerAdapter;
     private ProgressBar mProgressBar;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public void initUi() {
 
         mSearchEditText = (EditText) findViewById(R.id.search_edit_text);
-        mSearchImageButton = (ImageButton) findViewById(R.id.search_button);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -54,9 +54,12 @@ public class MainActivity extends AppCompatActivity {
     public void onSearchClick(View view) {
         String searchTerm = mSearchEditText.getText().toString();
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            searchAndShowTheResult(searchTerm);
+            if (DataUtils.isNetworkAvailable(getApplicationContext()))
+                searchAndShowTheResult(searchTerm);
+            else
+                showToast(getString(R.string.no_internet));
         } else {
-            showToast("Search text missing!");
+            showToast(getString(R.string.text_missing));
         }
     }
 
@@ -73,10 +76,14 @@ public class MainActivity extends AppCompatActivity {
                 ImageModelResponse modelResponse = response.body();
                 List<ImageModel> imageModelList = modelResponse.getImageModelList();
                 mProgressBar.setVisibility(View.GONE);
+
                 if (imageModelList != null && imageModelList.size() > 0) {
 
                     mImageRecyclerAdapter.setImageModelList(imageModelList);
                     mImageRecyclerAdapter.notifyDataSetChanged();
+                    mSearchEditText.setText("");
+                    mSearchEditText.setHint(getString(R.string.search_images));
+                    UiUtils.hideKeyboard(mSearchEditText, getApplicationContext());
                 } else {
                     showToast("No Result found");
                 }

@@ -32,6 +32,7 @@ public class FullScreenImageActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(getIntent().getStringExtra(FULL_IMAGE_URL)).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
                 return false;
             }
 
